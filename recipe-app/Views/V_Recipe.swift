@@ -29,7 +29,7 @@ class V_Recipe: UIView {
         let recipeBy = UILabel()
         recipeBy.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         recipeBy.textColor = .black
-        recipeBy.text = "By: " + recipe.author.name
+        recipeBy.text = "By: " + recipe.author_id
         recipeBy.translatesAutoresizingMaskIntoConstraints = false
         cardContainer.addSubview(recipeBy)
         
