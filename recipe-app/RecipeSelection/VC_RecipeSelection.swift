@@ -3,7 +3,7 @@ import UIKit
 class VC_RecipeSelection: UIViewController {
     var recipes: [Recipe] = []
     let activityIndicator = UIActivityIndicatorView(style: .large) // Instantiate the activity indicator
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,14 +21,42 @@ class VC_RecipeSelection: UIViewController {
             recipeSelectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
         
+        let recipeModel = RecipeModel()
+        
         // Fetch recipes
-        RecipeModel().fetchRecipes { recipes in
+        recipeModel.fetchRecipes { [weak self] recipes in
+            guard let self = self else { return }
             self.recipes = recipes
-            DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.removeFromSuperview()
-                recipeSelectionView.setRecipes(recipes)
-                recipeSelectionView.setupRecipeMenu()
+            
+            DispatchQueue.global().async {
+                let group = DispatchGroup()
+                
+                for index in 0..<recipes.count {
+                    group.enter()
+                    
+                    let recipe = recipes[index]
+                    
+                    recipeModel.fetchRecipeImage(imageUrl: recipe.image_url) { result in
+                        switch result {
+                        case .success(let image):
+                            self.recipes[index].image = image
+                        default:
+                            // Handle error case
+                            break
+                        }
+                        
+                        group.leave()
+                    }
+                }
+                
+                group.wait()
+                
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.removeFromSuperview()
+                    recipeSelectionView.setRecipes(self.recipes)
+                    recipeSelectionView.setupRecipeMenu()
+                }
             }
         }
     }

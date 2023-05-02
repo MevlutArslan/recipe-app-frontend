@@ -18,6 +18,10 @@ class V_Recipe: UIView {
         cardContainer.layer.shadowOpacity = 0.25
         cardContainer.layer.shadowRadius = 4
         cardContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        let recipeImageView = UIImageView(image: recipe.image)
+        recipeImageView.translatesAutoresizingMaskIntoConstraints = false
+        cardContainer.addSubview(recipeImageView)
         
         let recipeTitle = UILabel()
         recipeTitle.font = UIFont.systemFont(ofSize: 24, weight: .bold)
@@ -29,33 +33,41 @@ class V_Recipe: UIView {
         let recipeBy = UILabel()
         recipeBy.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         recipeBy.textColor = .black
-        recipeBy.text = "By: " + recipe.author_id
+        recipeBy.text = "By: " + recipe.author_name
         recipeBy.translatesAutoresizingMaskIntoConstraints = false
         cardContainer.addSubview(recipeBy)
         
         let recipePrepTime = UILabel()
         recipePrepTime.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         recipePrepTime.textColor = .black
-        recipePrepTime.text = "Prep time: " + recipe.prepTime.description + " mins"
+        recipePrepTime.text = "👨‍🍳" + recipe.prepTime.description
         recipePrepTime.translatesAutoresizingMaskIntoConstraints = false
         cardContainer.addSubview(recipePrepTime)
         
         let recipeCookTime = UILabel()
         recipeCookTime.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         recipeCookTime.textColor = .black
-        recipeCookTime.text = "Cook time: " + recipe.cookTime.description + " mins"
+        recipeCookTime.text = "⏲️" + recipe.cookTime.description
         recipeCookTime.translatesAutoresizingMaskIntoConstraints = false
         cardContainer.addSubview(recipeCookTime)
         
-        let viewsDictionary = ["recipeTitle": recipeTitle, "recipeBy": recipeBy, "recipePrepTime": recipePrepTime, "recipeCookTime": recipeCookTime]
+        let viewsDictionary = ["recipeImageView": recipeImageView, "recipeTitle": recipeTitle, "recipeBy": recipeBy, "recipePrepTime": recipePrepTime, "recipeCookTime": recipeCookTime]
         
-        cardContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[recipeTitle]-[recipeBy]-[recipePrepTime]-[recipeCookTime]-|", options: [], metrics: nil, views: viewsDictionary))
+        // V: prefix indicates that the constraints being added are for the vertical axis.
+        // '|' symbol represents the top and bottom edges of the container view.
+        // '-' symbol is a spacing indicator, indicating that there should be some space between each view and the next.
+        cardContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[recipeImageView(250)]-[recipeTitle]-[recipeBy(20)]", options: [], metrics: nil, views: viewsDictionary))
+        cardContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[recipeBy]-[recipePrepTime(20)]", options: [], metrics: nil, views: viewsDictionary))
+        cardContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[recipeBy]-[recipeCookTime(20)]-|", options: [], metrics: nil, views: viewsDictionary))
+        cardContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[recipeImageView]-|", options: [], metrics: nil, views: viewsDictionary))
         cardContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[recipeTitle]-|", options: [], metrics: nil, views: viewsDictionary))
-        cardContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[recipeBy]-|", options: [], metrics: nil, views: viewsDictionary))
-        cardContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[recipePrepTime]-|", options: [], metrics: nil, views: viewsDictionary))
-        cardContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[recipeCookTime]-|", options: [], metrics: nil, views: viewsDictionary))
-        
+        cardContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[recipeBy]-[recipePrepTime]-[recipeCookTime]-|", options: [], metrics: nil, views: viewsDictionary))
+
+        recipeImageView.centerYAnchor.constraint(equalTo: cardContainer.centerYAnchor, constant: -40).isActive = true
+        recipeImageView.centerXAnchor.constraint(equalTo: cardContainer.centerXAnchor).isActive = true
+
         return cardContainer
     }
+
 
 }
