@@ -10,7 +10,9 @@ class VC_RecipeSelection: UIViewController {
         view.backgroundColor = .blue
         setupActivityIndicator()
         
-        let recipeSelectionView = V_RecipeSelection()
+//        V_Recipe.onTapRecipe = handleRecipeSelect
+        
+        let recipeSelectionView = RecipeMenuView(frame: view.frame)
         recipeSelectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(recipeSelectionView)
         
@@ -20,11 +22,9 @@ class VC_RecipeSelection: UIViewController {
             recipeSelectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             recipeSelectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
-        
-        let recipeModel = RecipeModel()
-        
+                
         // Fetch recipes
-        recipeModel.fetchRecipes { [weak self] recipes in
+        RecipeModel.fetchRecipes { [weak self] recipes in
             guard let self = self else { return }
             self.recipes = recipes
             
@@ -36,7 +36,7 @@ class VC_RecipeSelection: UIViewController {
                     
                     let recipe = recipes[index]
                     
-                    recipeModel.fetchRecipeImage(imageUrl: recipe.image_url) { result in
+                    RecipeModel.fetchRecipeImage(imageUrl: recipe.image_url) { result in
                         switch result {
                         case .success(let image):
                             self.recipes[index].image = image
@@ -66,5 +66,9 @@ class VC_RecipeSelection: UIViewController {
         activityIndicator.color = .white
         activityIndicator.startAnimating()
         view.addSubview(activityIndicator)
+    }
+    
+    private func handleRecipeSelect() {
+        print("tapped card")
     }
 }
