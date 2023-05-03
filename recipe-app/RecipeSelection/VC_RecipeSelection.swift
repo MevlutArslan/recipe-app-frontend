@@ -10,9 +10,8 @@ class VC_RecipeSelection: UIViewController {
         view.backgroundColor = .blue
         setupActivityIndicator()
         
-//        V_Recipe.onTapRecipe = handleRecipeSelect
         
-        let recipeSelectionView = RecipeMenuView(frame: view.frame)
+        let recipeSelectionView = RecipeMenuView(frame: view.frame, viewController: self)
         recipeSelectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(recipeSelectionView)
         
@@ -68,7 +67,8 @@ class VC_RecipeSelection: UIViewController {
         view.addSubview(activityIndicator)
     }
     
-    private func handleRecipeSelect() {
-        print("tapped card")
+    @objc func handleRecipeSelect(sender: UITapGestureRecognizer) {
+        var id = sender.accessibilityValue // this is a dumb way to do it but f*** it
+        print("tapped card: \(id)")
     }
 }

@@ -9,10 +9,18 @@ import UIKit
 
 class RecipeMenuView: UIScrollView {
     private var recipes: [Recipe] = []
-
+    private weak var viewController: VC_RecipeSelection?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
        
+        setupRecipeMenu()
+    }
+    
+    init(frame: CGRect, viewController: VC_RecipeSelection){
+        super.init(frame: frame)
+        
+        self.viewController = viewController
         setupRecipeMenu()
     }
     
@@ -22,7 +30,6 @@ class RecipeMenuView: UIScrollView {
         // Initialize your view here.
         setupRecipeMenu()
     }
-        
     
     func setupRecipeMenu() {
         self.backgroundColor = .yellow
@@ -52,6 +59,11 @@ class RecipeMenuView: UIScrollView {
 
         for recipe in recipes {
             let recipeView = RecipeCardView(frame: self.frame, recipe: recipe)
+            if let vc = viewController {
+                var gestureRecognizer = UITapGestureRecognizer(target: vc, action: #selector(vc.handleRecipeSelect(sender:)))
+                gestureRecognizer.accessibilityValue = recipe.id
+                recipeView.addGestureRecognizer(gestureRecognizer)
+            }
             stackView.addArrangedSubview(recipeView)
         }
 
@@ -62,5 +74,4 @@ class RecipeMenuView: UIScrollView {
     public func setRecipes(_ recipes: [Recipe]) {
         self.recipes = recipes
     }
-
 }
