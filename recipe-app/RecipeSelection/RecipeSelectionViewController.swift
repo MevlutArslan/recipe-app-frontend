@@ -1,6 +1,6 @@
 import UIKit
 
-class VC_RecipeSelection: UIViewController {
+class RecipeSelectionViewController: UIViewController {
     var recipes: [Recipe] = []
     let activityIndicator = UIActivityIndicatorView(style: .large) // Instantiate the activity indicator
     
@@ -9,7 +9,6 @@ class VC_RecipeSelection: UIViewController {
         
         view.backgroundColor = .blue
         setupActivityIndicator()
-        
         
         let recipeSelectionView = RecipeMenuView(frame: view.frame, viewController: self)
         recipeSelectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -21,7 +20,7 @@ class VC_RecipeSelection: UIViewController {
             recipeSelectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             recipeSelectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
-                
+        
         // Fetch recipes
         RecipeModel.fetchRecipes { [weak self] recipes in
             guard let self = self else { return }
@@ -69,6 +68,6 @@ class VC_RecipeSelection: UIViewController {
     
     @objc func handleRecipeSelect(sender: UITapGestureRecognizer) {
         var id = sender.accessibilityValue // this is a dumb way to do it but f*** it
-        print("tapped card: \(id)")
+        navigationController?.pushViewController(RecipeViewController(recipeId: id!), animated: true)
     }
 }

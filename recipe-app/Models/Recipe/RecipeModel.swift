@@ -10,6 +10,7 @@ import UIKit
 class RecipeModel {
     // @escaping makes sure we wait for the results to be ready before we return to make sure we don't return an empty array.
     private static let baseUrl = "http://10.0.0.62:8888/"
+    
     static func fetchRecipes(completion: @escaping ([Recipe]) -> Void) {
         guard let url = URL(string: baseUrl + "recipes") else {
             completion([])
@@ -72,14 +73,13 @@ class RecipeModel {
     }
     
     static func fetchRecipeById(recipeId: String, completion: @escaping ((Result<Recipe, Error>) -> Void)) {
-        guard let url = URL(string: baseUrl + "recipe/\(recipeId)") else {
+        guard let url = URL(string: baseUrl + "recipes/\(recipeId)") else {
             completion(.failure(NSError(domain: "Failed to create URL", code: 0)))
             return
         }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
-                print(error!)
                 completion(.failure(NSError(domain: "Failed to connect to URL", code: 0)))
                 return
             }
@@ -103,6 +103,8 @@ class RecipeModel {
                 completion(.failure(error))
             }
         }
+        
+        task.resume()
     }
 
 

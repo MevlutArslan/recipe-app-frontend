@@ -9,7 +9,7 @@ import UIKit
 
 class RecipeMenuView: UIScrollView {
     private var recipes: [Recipe] = []
-    private weak var viewController: VC_RecipeSelection?
+    private weak var viewController: RecipeSelectionViewController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -17,7 +17,7 @@ class RecipeMenuView: UIScrollView {
         setupRecipeMenu()
     }
     
-    init(frame: CGRect, viewController: VC_RecipeSelection){
+    init(frame: CGRect, viewController: RecipeSelectionViewController){
         super.init(frame: frame)
         
         self.viewController = viewController

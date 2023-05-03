@@ -35,7 +35,6 @@ class RecipeCardView: UIView {
     }
     
     private func createRecipeView(recipe: Recipe) {
-
         let recipeImageView = UIImageView(image: recipe.image)
         recipeImageView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(recipeImageView)
