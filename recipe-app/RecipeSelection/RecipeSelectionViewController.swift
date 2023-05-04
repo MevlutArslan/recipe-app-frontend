@@ -67,7 +67,7 @@ class RecipeSelectionViewController: UIViewController {
     }
     
     @objc func handleRecipeSelect(sender: UITapGestureRecognizer) {
-        var id = sender.accessibilityValue // this is a dumb way to do it but f*** it
+        let id = sender.accessibilityValue // this is a dumb way to do it but f*** it
         navigationController?.pushViewController(RecipeViewController(recipeId: id!), animated: true)
     }
 }

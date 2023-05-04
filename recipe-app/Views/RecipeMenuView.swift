@@ -60,7 +60,7 @@ class RecipeMenuView: UIScrollView {
         for recipe in recipes {
             let recipeView = RecipeCardView(frame: self.frame, recipe: recipe)
             if let vc = viewController {
-                var gestureRecognizer = UITapGestureRecognizer(target: vc, action: #selector(vc.handleRecipeSelect(sender:)))
+                let gestureRecognizer = UITapGestureRecognizer(target: vc, action: #selector(vc.handleRecipeSelect(sender:)))
                 gestureRecognizer.accessibilityValue = recipe.id
                 recipeView.addGestureRecognizer(gestureRecognizer)
             }
