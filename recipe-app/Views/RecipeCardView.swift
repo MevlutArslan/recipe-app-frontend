@@ -53,6 +53,13 @@ class RecipeCardView: UIView {
         recipeBy.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(recipeBy)
         
+        let recipeYieldLabel = UILabel()
+        recipeYieldLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        recipeYieldLabel.textColor = .black
+        recipeYieldLabel.text = "👥" + recipe.recipe_yield
+        recipeYieldLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(recipeYieldLabel)
+        
         let recipePrepTime = UILabel()
         recipePrepTime.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         recipePrepTime.textColor = .black
@@ -67,7 +74,8 @@ class RecipeCardView: UIView {
         recipeCookTime.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(recipeCookTime)
         
-        let viewsDictionary = ["recipeImageView": recipeImageView, "recipeTitle": recipeTitle, "recipeBy": recipeBy, "recipePrepTime": recipePrepTime, "recipeCookTime": recipeCookTime]
+        let viewsDictionary = ["recipeImageView": recipeImageView, "recipeTitle": recipeTitle, "recipeBy": recipeBy, "recipePrepTime": recipePrepTime, "recipeCookTime": recipeCookTime,
+                               "recipeYield": recipeYieldLabel]
         
         // V: prefix indicates that the constraints being added are for the vertical axis.
         // '|' symbol represents the top and bottom edges of the container view.
@@ -75,9 +83,10 @@ class RecipeCardView: UIView {
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[recipeImageView(250)]-[recipeTitle]-[recipeBy(20)]", options: [], metrics: nil, views: viewsDictionary))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[recipeBy]-[recipePrepTime(20)]", options: [], metrics: nil, views: viewsDictionary))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[recipeBy]-[recipeCookTime(20)]-|", options: [], metrics: nil, views: viewsDictionary))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[recipeBy]-[recipeYield(20)]-|", options: [], metrics: nil, views: viewsDictionary))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[recipeImageView]-|", options: [], metrics: nil, views: viewsDictionary))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[recipeTitle]-|", options: [], metrics: nil, views: viewsDictionary))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[recipeBy]-[recipePrepTime]-[recipeCookTime]-|", options: [], metrics: nil, views: viewsDictionary))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[recipeBy]-[recipeYield]-[recipePrepTime]-[recipeCookTime]-|", options: [], metrics: nil, views: viewsDictionary))
         
         recipeImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -40).isActive = true
         recipeImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true

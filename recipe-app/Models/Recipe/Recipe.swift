@@ -11,6 +11,7 @@ struct Recipe : Codable {
     var name: String
     var author_name: String
     var image_url: String
+    var recipe_yield: String
     var prepTime: String
     var cookTime: String
     var ingredients: [[String: [String]]]
@@ -26,6 +27,7 @@ struct Recipe : Codable {
         case cookTime
         case ingredients
         case instructions
+        case recipe_yield
     }
     
 }
