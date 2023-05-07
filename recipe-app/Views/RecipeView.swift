@@ -20,9 +20,12 @@ class RecipeView : UIView {
     private let ingredientsStackView = UIStackView()
     private let instructionsStackView = UIStackView()
     
-    init(frame: CGRect, recipe: Recipe) {
+    private weak var viewController: RecipeViewController?
+    
+    init(frame: CGRect, recipe: Recipe, viewController: RecipeViewController) {
         super.init(frame: frame)
         setupRecipeView(recipe: recipe)
+        self.viewController = viewController
     }
     
     required init?(coder: NSCoder) {
@@ -34,6 +37,23 @@ class RecipeView : UIView {
         scrollView.frame = self.frame
         addSubview(scrollView)
         
+        let button = UIButton(type: .system)
+        button.setTitle("AR", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        button.backgroundColor = .red
+        button.layer.cornerRadius = 10
+        button.layer.masksToBounds = true
+        button.tintColor = .white
+        button.addTarget(viewController, action: #selector(self.viewController!.launchAR), for: .touchUpInside)
+
+        // Add the button to the view
+        addSubview(button)
+
+        // Set the button's position
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16).isActive = true
+        button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16).isActive = true
+
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.spacing = 16
