@@ -17,7 +17,7 @@ class RecipeModel {
             return
         }
         
-        var request = URLRequest(url: url)
+        let request = URLRequest(url: url)
 //        request.cachePolicy = .returnCacheDataElseLoad
         
         let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in

@@ -8,30 +8,40 @@
 import UIKit
 import ARKit
 
-class ARViewController: UIViewController {
+class ARViewController: UIViewController, ARSessionDelegate {
     var arView: ARSCNView!
-
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-                // Create a new ARSCNView instance
-        arView = ARSCNView(frame: self.view.frame)
-
-        // Add the ARSCNView to your view hierarchy
-        self.view.addSubview(arView)
-    }
+    var arSession = ARSession()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
+        configuration.worldAlignment = .gravity
         
         // Run the AR session
         arView.session.run(configuration)
     }
     
-    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+                // Create a new ARSCNView instance
+        arSession.delegate = self
+        
+        arView = ARSCNView(frame: self.view.frame)
+        arView.session = arSession
+        
+        // Create a 3D object node
+        let objectNode = SCNNode()
+        objectNode.geometry = SCNSphere(radius: 0.1)
+        objectNode.position = SCNVector3(0, 0, -0.5) // Set position in 3D space
+
+        // Add the object node to the AR session
+        arView.scene.rootNode.addChildNode(objectNode)
+
+        // Add the ARSCNView to your view hierarchy
+        self.view.addSubview(arView)
+    }
     
     func setupView() {
         
