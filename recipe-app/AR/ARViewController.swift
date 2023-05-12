@@ -23,6 +23,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     private var loadedImage: UIImage = UIImage()
     private var state: ARSessionStates = .QRCodeDisplayed
     private let configuration = ARWorldTrackingConfiguration()
+    private var previousViewController: RecipeViewController?
     
     let handPoseRequest: VNDetectHumanHandPoseRequest = {
         let request = VNDetectHumanHandPoseRequest()
@@ -63,6 +64,9 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
                 self.arView.addSubview(QrCodeMenuView(frame: self.arView.frame, qrCode: self.loadedImage, viewController: self))
             }
         })
+        
+        let n = self.navigationController!.viewControllers.count
+        previousViewController = self.navigationController?.viewControllers[n-2] as? RecipeViewController
     }
     
     @objc func handleQRCodeDownload(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -99,30 +103,50 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         guard let imageAnchor = anchor as? ARImageAnchor else {
             return
         }
-        print(imageAnchor.referenceImage)
+
         let physicalWidth = imageAnchor.referenceImage.physicalSize.width
         let physicalHeight = imageAnchor.referenceImage.physicalSize.height
+        
+        let widthInPixels = self.getDimensionInPixels(meters: Float(physicalWidth))
+        let heightInPixels = self.getDimensionInPixels(meters: Float(physicalHeight))
+        
+        let frameWidthInPixels: Float = 390
+        let frameHeightInPixels: Float = 844
 
+        let frameWidthInMeters: Float = self.pixelToMeters(pixels: frameWidthInPixels)
+        let frameHeightInMeters: Float = self.pixelToMeters(pixels: frameHeightInPixels)
+        
+        let cube = SCNBox(width: CGFloat(frameWidthInMeters), height: CGFloat(frameHeightInMeters), length: CGFloat(frameWidthInMeters) / 3, chamferRadius: 0)
+        
         // Create a plane geometry to visualize the initial position of the detected image
-        let mainPlane = SCNPlane(width: physicalWidth, height: physicalHeight)
-
-        mainPlane.firstMaterial?.diffuse.contents = UIColor.blue
+        let mainPlane = SCNPlane(width: CGFloat(frameWidthInMeters), height: CGFloat(frameHeightInMeters))
         
         let mainNode = SCNNode(geometry: mainPlane)
-        mainNode.eulerAngles.x = -.pi / 2
-        mainNode.renderingOrder = -1
+        mainNode.position = SCNVector3(x: 0, y: 0, z: ((frameWidthInMeters / 3) / 2) + 0.0012)
         mainNode.opacity = 1
         
-//        let cube = SCNBox(width: 0.035, height: 0.035, length: 0.035, chamferRadius: 0)
-//        cube.firstMaterial?.diffuse.contents = UIColor.red
-//
-//        mainNode.addChildNode(SCNNode(geometry: cube))
+        DispatchQueue.main.async {
+            let recipeView = RecipeView(frame: self.arView.frame, recipe: self.previousViewController!.recipe!)
+
+            mainPlane.firstMaterial?.diffuse.contents = recipeView.renderToImage()
+        }
         
-        
+        let cubeNode = SCNNode(geometry: cube)
+        cubeNode.position = SCNVector3(x: 0, y: 0, z: 0) // Position the cube slightly above the detected image
+        cubeNode.eulerAngles.x = -.pi / 2
+        cubeNode.addChildNode(mainNode)
         node.transform = SCNMatrix4(imageAnchor.transform)
         
-        node.addChildNode(mainNode)
+        node.addChildNode(cubeNode)
         
+    }
+    
+    private func pixelToMeters(pixels: Float) -> Float {
+        return (pixels / 460) * 0.0254;
+    }
+    
+    private func getDimensionInPixels(meters: Float) -> Float {
+        return meters * 460 / 0.0254
     }
     
 }

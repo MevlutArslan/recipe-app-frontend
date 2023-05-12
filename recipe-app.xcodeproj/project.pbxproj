@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47D403172A08444800E786AB /* ARError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D403162A08444800E786AB /* ARError.swift */; };
+		47D403192A0AFE1900E786AB /* ARViewController+HandRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D403182A0AFE1900E786AB /* ARViewController+HandRecognizer.swift */; };
+		47D4031B2A0B0E0500E786AB /* ARModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D4031A2A0B0E0500E786AB /* ARModel.swift */; };
+		47D4031D2A0B143C00E786AB /* QrCodeMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D4031C2A0B143C00E786AB /* QrCodeMenuView.swift */; };
 		47FBAA372A00324A004DE35C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FBAA362A00324A004DE35C /* AppDelegate.swift */; };
 		47FBAA392A00324A004DE35C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FBAA382A00324A004DE35C /* SceneDelegate.swift */; };
 		47FBAA402A00324D004DE35C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47FBAA3F2A00324D004DE35C /* Assets.xcassets */; };
@@ -22,6 +26,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47D403162A08444800E786AB /* ARError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARError.swift; sourceTree = "<group>"; };
+		47D403182A0AFE1900E786AB /* ARViewController+HandRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARViewController+HandRecognizer.swift"; sourceTree = "<group>"; };
+		47D4031A2A0B0E0500E786AB /* ARModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARModel.swift; sourceTree = "<group>"; };
+		47D4031C2A0B143C00E786AB /* QrCodeMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrCodeMenuView.swift; sourceTree = "<group>"; };
 		47FBAA332A00324A004DE35C /* recipe-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "recipe-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47FBAA362A00324A004DE35C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47FBAA382A00324A004DE35C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +137,10 @@
 			isa = PBXGroup;
 			children = (
 				47FBAA6C2A05035E004DE35C /* ARViewController.swift */,
+				47D403162A08444800E786AB /* ARError.swift */,
+				47D403182A0AFE1900E786AB /* ARViewController+HandRecognizer.swift */,
+				47D4031A2A0B0E0500E786AB /* ARModel.swift */,
+				47D4031C2A0B143C00E786AB /* QrCodeMenuView.swift */,
 			);
 			path = AR;
 			sourceTree = "<group>";
@@ -203,8 +215,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47D403192A0AFE1900E786AB /* ARViewController+HandRecognizer.swift in Sources */,
 				47FBAA522A0046A4004DE35C /* RecipeSelectionViewController.swift in Sources */,
 				47FBAA572A0048BB004DE35C /* Recipe.swift in Sources */,
+				47D4031D2A0B143C00E786AB /* QrCodeMenuView.swift in Sources */,
+				47D403172A08444800E786AB /* ARError.swift in Sources */,
 				47FBAA682A0214DA004DE35C /* RecipeView.swift in Sources */,
 				47FBAA5E2A007E2C004DE35C /* RecipeCardView.swift in Sources */,
 				47FBAA662A01C737004DE35C /* RecipeViewController.swift in Sources */,
@@ -212,6 +227,7 @@
 				47FBAA612A01765D004DE35C /* RecipeModel.swift in Sources */,
 				47FBAA372A00324A004DE35C /* AppDelegate.swift in Sources */,
 				47FBAA392A00324A004DE35C /* SceneDelegate.swift in Sources */,
+				47D4031B2A0B0E0500E786AB /* ARModel.swift in Sources */,
 				47FBAA6D2A05035E004DE35C /* ARViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -354,10 +370,11 @@
 				DEVELOPMENT_TEAM = H6ZJD73J7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "recipe-app/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "FOR AR";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -370,7 +387,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -384,10 +401,11 @@
 				DEVELOPMENT_TEAM = H6ZJD73J7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "recipe-app/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "FOR AR";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -400,7 +418,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

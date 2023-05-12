@@ -10,7 +10,7 @@ import ARKit
 
 class RecipeViewController: UIViewController {
     private var recipeId: String
-    private var recipe: Recipe?
+    var recipe: Recipe?
     let activityIndicator = UIActivityIndicatorView(style: .large) // Instantiate the activity indicator
     
     

@@ -28,6 +28,11 @@ class RecipeView : UIView {
         self.viewController = viewController
     }
     
+    init(frame: CGRect, recipe: Recipe) {
+        super.init(frame: frame)
+        setupRecipeView(recipe: recipe)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -44,16 +49,17 @@ class RecipeView : UIView {
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.tintColor = .white
+        
         button.addTarget(viewController, action: #selector(self.viewController!.launchAR), for: .touchUpInside)
-
+        
         // Add the button to the view
         addSubview(button)
-
+        
         // Set the button's position
         button.translatesAutoresizingMaskIntoConstraints = false
         button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16).isActive = true
         button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16).isActive = true
-
+        
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.spacing = 16
@@ -171,6 +177,15 @@ class RecipeView : UIView {
         }
         
         stackView.addArrangedSubview(verticalStack)
-                    
+        
+    }
+}
+
+extension UIView {
+    func renderToImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: self.bounds.size)
+        return renderer.image { ctx in
+            self.drawHierarchy(in: self.bounds, afterScreenUpdates: true)
+        }
     }
 }
